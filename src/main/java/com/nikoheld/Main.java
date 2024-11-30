@@ -8,8 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.awt.Robot;
-import java.awt.AWTException;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -71,7 +70,7 @@ public class Main {
                             writeCharacter(robot, c);
                         }
                     } catch (Exception innerEx) {
-                        // Ignoriere Fehler, falls XPath noch nicht verfügbar
+                        System.err.println("Fehler beim Abrufen des Zeichens: " + innerEx.getMessage());
                     }
                 }
             }
@@ -86,71 +85,12 @@ public class Main {
 
     private static void writeCharacter(Robot robot, char c) {
         try {
-            // Großbuchstaben mit Shift schreiben
+            // Großbuchstaben mit Shift
             if (Character.isUpperCase(c)) {
                 robot.keyPress(KeyEvent.VK_SHIFT);
                 robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(Character.toLowerCase(c)));
                 robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(Character.toLowerCase(c)));
                 robot.keyRelease(KeyEvent.VK_SHIFT);
-            }
-            // Umlaute und Sonderzeichen
-            else if ("äöüÄÖÜß".indexOf(c) >= 0) {
-                switch (c) {
-                    case 'ä':
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_A);
-                        robot.keyRelease(KeyEvent.VK_A);
-                        break;
-                    case 'ö':
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_O);
-                        robot.keyRelease(KeyEvent.VK_O);
-                        break;
-                    case 'ü':
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_U);
-                        robot.keyRelease(KeyEvent.VK_U);
-                        break;
-                    case 'Ä':
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_A);
-                        robot.keyRelease(KeyEvent.VK_A);
-                        break;
-                    case 'Ö':
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_O);
-                        robot.keyRelease(KeyEvent.VK_O);
-                        break;
-                    case 'Ü':
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_QUOTE);
-                        robot.keyRelease(KeyEvent.VK_SHIFT);
-                        robot.keyPress(KeyEvent.VK_U);
-                        robot.keyRelease(KeyEvent.VK_U);
-                        break;
-                    case 'ß':
-                        robot.keyPress(KeyEvent.VK_ALT);
-                        robot.keyPress(KeyEvent.VK_S);
-                        robot.keyRelease(KeyEvent.VK_S);
-                        robot.keyRelease(KeyEvent.VK_ALT);
-                        break;
-                }
             }
             // Standardzeichen schreiben
             else {
