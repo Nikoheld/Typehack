@@ -85,20 +85,75 @@ public class Main {
 
     private static void writeCharacter(Robot robot, char c) {
         try {
-            // Großbuchstaben mit Shift
-            if (Character.isUpperCase(c)) {
-                robot.keyPress(KeyEvent.VK_SHIFT);
-                robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(Character.toLowerCase(c)));
-                robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(Character.toLowerCase(c)));
-                robot.keyRelease(KeyEvent.VK_SHIFT);
-            }
-            // Standardzeichen schreiben
-            else {
-                int keyCode = KeyEvent.getExtendedKeyCodeForChar(c);
-                if (KeyEvent.CHAR_UNDEFINED != keyCode) {
-                    robot.keyPress(keyCode);
-                    robot.keyRelease(keyCode);
-                }
+            // Spezielle Zuordnungen für ä, ö, ü, :, ;, (, ), ! und Großbuchstaben
+            switch (c) {
+                case 'ö':
+                    robot.keyPress(KeyEvent.VK_0);
+                    robot.keyRelease(KeyEvent.VK_0);
+                    break;
+                case 'ä':
+                    robot.keyPress(KeyEvent.VK_9);
+                    robot.keyRelease(KeyEvent.VK_9);
+                    break;
+                case 'ü':
+                    robot.keyPress(KeyEvent.VK_8);
+                    robot.keyRelease(KeyEvent.VK_8);
+                    break;
+                case 'Ö':
+                    robot.keyPress(KeyEvent.VK_SHIFT);
+                    robot.keyPress(KeyEvent.VK_0);
+                    robot.keyRelease(KeyEvent.VK_0);
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                    break;
+                case 'Ä':
+                    robot.keyPress(KeyEvent.VK_SHIFT);
+                    robot.keyPress(KeyEvent.VK_9);
+                    robot.keyRelease(KeyEvent.VK_9);
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                    break;
+                case 'Ü':
+                    robot.keyPress(KeyEvent.VK_SHIFT);
+                    robot.keyPress(KeyEvent.VK_8);
+                    robot.keyRelease(KeyEvent.VK_8);
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                    break;
+                case ':':
+                    robot.keyPress(KeyEvent.VK_5);
+                    robot.keyRelease(KeyEvent.VK_5);
+                    break;
+                case ';':
+                    robot.keyPress(KeyEvent.VK_4);
+                    robot.keyRelease(KeyEvent.VK_4);
+                    break;
+                case '(':
+                    robot.keyPress(KeyEvent.VK_6);
+                    robot.keyRelease(KeyEvent.VK_6);
+                    break;
+                case ')':
+                    robot.keyPress(KeyEvent.VK_7);
+                    robot.keyRelease(KeyEvent.VK_7);
+                    break;
+                case '!':
+                    robot.keyPress(KeyEvent.VK_3);
+                    robot.keyRelease(KeyEvent.VK_3);
+                    break;
+                default:
+                    // Großbuchstaben mit Shift
+                    if (Character.isUpperCase(c)) {
+                        robot.keyPress(KeyEvent.VK_SHIFT);
+                        robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(Character.toLowerCase(c)));
+                        robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(Character.toLowerCase(c)));
+                        robot.keyRelease(KeyEvent.VK_SHIFT);
+                    }
+                    // Standardzeichen schreiben
+                    else {
+                        int keyCode = KeyEvent.getExtendedKeyCodeForChar(c);
+                        if (KeyEvent.CHAR_UNDEFINED != keyCode) {
+                            robot.keyPress(keyCode);
+                            robot.keyRelease(keyCode);
+                        }
+                    }
+                    break;
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Schreiben des Zeichens: " + c);
